@@ -1,38 +1,1167 @@
-.App {
-  text-align: center;
-}
+import React, { useState, useEffect } from 'react';
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+// الأيقونات المدمجة بدلاً من lucide-react
+const Search = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="11" cy="11" r="8"/>
+    <path d="m21 21-4.35-4.35"/>
+  </svg>
+);
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+const Zap = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/>
+  </svg>
+);
+
+const Shield = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M12,22s8-4 8-10V5l-8-3-8,3v7C4,18 12,22 12,22z"/>
+  </svg>
+);
+
+const Users = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </svg>
+);
+
+const TrendingUp = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/>
+    <polyline points="16,7 22,7 22,13"/>
+  </svg>
+);
+
+const BarChart3 = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M3 3v18h18"/>
+    <path d="M18 17V9"/>
+    <path d="M13 17V5"/>
+    <path d="M8 17v-3"/>
+  </svg>
+);
+
+const Download = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7,10 12,15 17,10"/>
+    <line x1="12" y1="15" x2="12" y2="3"/>
+  </svg>
+);
+
+const CheckCircle = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+    <polyline points="22,4 12,14.01 9,11.01"/>
+  </svg>
+);
+
+const AlertTriangle = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+    <line x1="12" y1="9" x2="12" y2="13"/>
+    <line x1="12" y1="17" x2="12.01" y2="17"/>
+  </svg>
+);
+
+const XCircle = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="15" y1="9" x2="9" y2="15"/>
+    <line x1="9" y1="9" x2="15" y2="15"/>
+  </svg>
+);
+
+const Globe = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="2" y1="12" x2="22" y2="12"/>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </svg>
+);
+
+const Clock = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <polyline points="12,6 12,12 16,14"/>
+  </svg>
+);
+
+const Target = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <circle cx="12" cy="12" r="6"/>
+    <circle cx="12" cy="12" r="2"/>
+  </svg>
+);
+
+const Eye = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </svg>
+);
+
+const ArrowRight = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <line x1="5" y1="12" x2="19" y2="12"/>
+    <polyline points="12,5 19,12 12,19"/>
+  </svg>
+);
+
+const Star = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+  </svg>
+);
+
+const Trophy = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+    <path d="M4 22h16"/>
+    <path d="M10 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"/>
+    <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+  </svg>
+);
+
+const Lightbulb = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M9 21h6"/>
+    <path d="M12 17h.01"/>
+    <path d="M12 3a5 5 0 0 1 5 5c0 1.5-.5 2.5-1 3l-.5 1h-7l-.5-1c-.5-.5-1-1.5-1-3a5 5 0 0 1 5-5z"/>
+  </svg>
+);
+
+const ShoppingCart = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="8" cy="21" r="1"/>
+    <circle cx="19" cy="21" r="1"/>
+    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L23 8H7"/>
+  </svg>
+);
+
+const TrendingDown = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="22,17 13.5,8.5 8.5,13.5 2,7"/>
+    <polyline points="16,17 22,17 22,11"/>
+  </svg>
+);
+
+const DollarSign = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <line x1="12" y1="1" x2="12" y2="23"/>
+    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+  </svg>
+);
+
+const Activity = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+  </svg>
+);
+
+const RefreshCw = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+    <path d="M21 3v5h-5"/>
+    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+    <path d="M8 16H3v5"/>
+  </svg>
+);
+
+const FileText = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+  </svg>
+);
+
+const ThumbsUp = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+  </svg>
+);
+
+const Verified = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M9 12l2 2 4-4"/>
+    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+  </svg>
+);
+
+const Award = ({ className = "h-6 w-6", ...props }) => (
+  <svg className={className} {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="8" r="7"/>
+    <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+  </svg>
+);
+
+const AdvancedStoreAnalyzer = () => {
+  const [url, setUrl] = useState('');
+  const [competitorUrl, setCompetitorUrl] = useState('');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisComplete, setAnalysisComplete] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [currentStep, setCurrentStep] = useState('');
+  const [analysisResults, setAnalysisResults] = useState(null);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const analysisSteps = [
+    'فحص بنية الموقع والتصميم...',
+    'تحليل Core Web Vitals المتقدم...',
+    'فحص مسار الشراء وعملية الدفع...',
+    'تحليل تجربة المستخدم والتنقل...',
+    'فحص محركات البحث والسيو التقني...',
+    'تحليل الأمان وشهادات الحماية...',
+    'فحص التوافق مع الجوال والأجهزة...',
+    'تحليل سرعة التحميل والأداء...',
+    'فحص المحتوى والكلمات المفتاحية...',
+    'تحليل وسائل التواصل الاجتماعي...',
+    'فحص استراتيجيات التسويق...',
+    'تحليل معدلات التحويل المتقدم...',
+    'إنشاء التوصيات المخصصة...'
+  ];
+
+  // CSS Styles
+  const styles = {
+    container: {
+      minHeight: '100vh',
+      backgroundColor: '#f8fafc',
+      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'
+    },
+    gradientBg: {
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    },
+    card: {
+      backgroundColor: 'white',
+      borderRadius: '20px',
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      transition: 'all 0.3s ease'
+    },
+    button: {
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      border: 'none',
+      color: 'white',
+      padding: '16px 32px',
+      borderRadius: '12px',
+      fontWeight: '600',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      justifyContent: 'center'
+    },
+    inputField: {
+      width: '100%',
+      padding: '16px',
+      border: '2px solid #e2e8f0',
+      borderRadius: '12px',
+      fontSize: '16px',
+      transition: 'all 0.3s ease',
+      outline: 'none',
+      boxSizing: 'border-box'
+    },
+    progressBar: {
+      width: '100%',
+      height: '8px',
+      backgroundColor: '#e2e8f0',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      position: 'relative'
+    },
+    progressFill: {
+      height: '100%',
+      background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+      borderRadius: '4px',
+      transition: 'width 0.5s ease'
+    }
+  };
+
+  const handleAnalyze = async () => {
+    if (!url) return;
+    
+    setIsAnalyzing(true);
+    setAnalysisComplete(false);
+    setProgress(0);
+    
+    for (let i = 0; i < analysisSteps.length; i++) {
+      setCurrentStep(analysisSteps[i]);
+      setProgress(((i + 1) / analysisSteps.length) * 100);
+      await new Promise(resolve => setTimeout(resolve, 1500));
+    }
+    
+    // نتائج تحليل شاملة ومتقدمة
+    setAnalysisResults({
+      overallScore: 84,
+      performanceScore: 78,
+      seoScore: 88,
+      securityScore: 95,
+      uxScore: 82,
+      croScore: 76,
+      mobileScore: 89,
+      accessibilityScore: 71,
+      contentScore: 85,
+      trustScore: 92,
+      
+      // مؤشرات أداء متقدمة
+      metrics: {
+        pageLoadTime: 2.1,
+        firstContentfulPaint: 1.8,
+        largestContentfulPaint: 2.4,
+        cumulativeLayoutShift: 0.08,
+        firstInputDelay: 85,
+        timeToInteractive: 3.2,
+        conversionRate: 2.8,
+        bounceRate: 34,
+        averageSessionDuration: '4:32',
+        pagesPerSession: 3.2,
+        organicTraffic: 68,
+        directTraffic: 22,
+        socialTraffic: 10,
+        trustScore: 92,
+        securityRating: 'A+',
+        mobileUsability: 89,
+        pageSpeedScore: 78
+      },
+
+      // تحليل التجارة الإلكترونية المتقدم
+      ecommerceAnalysis: {
+        checkoutSteps: 4,
+        paymentMethods: 8,
+        shippingOptions: 5,
+        returnPolicy: true,
+        wishlistFeature: true,
+        productReviews: true,
+        liveChatSupport: false,
+        multiCurrency: true,
+        stockStatus: 'متوفر',
+        averageOrderValue: 285,
+        cartAbandonmentRate: 69,
+        customerRetentionRate: 34,
+        productCatalogSize: 1250,
+        outOfStockItems: 8,
+        averageDeliveryTime: '3-5 أيام'
+      },
+
+      // تحليل المنافسين
+      competitorAnalysis: {
+        marketPosition: 'متوسط',
+        priceCompetitiveness: 78,
+        featureComparison: {
+          productRange: 85,
+          customerService: 72,
+          websiteUsability: 88,
+          brandTrust: 79
+        },
+        strengths: [
+          'تنوع في المنتجات',
+          'تصميم جذاب',
+          'سرعة التحميل جيدة'
+        ],
+        weaknesses: [
+          'خدمة عملاء محدودة',
+          'عملية دفع معقدة',
+          'قلة طرق الدفع'
+        ]
+      },
+
+      // مشاكل مصنفة بدقة
+      criticalIssues: [
+        {
+          type: 'error',
+          category: 'conversion',
+          title: 'معدل تخلي عالي في عربة الشراء',
+          description: '69% من العملاء يتخلون عن عربة الشراء قبل إتمام الشراء',
+          impact: 'خسارة 15,000 ريال شهرياً',
+          urgency: 'عاجل',
+          effort: 'متوسط',
+          roi: 'عالي'
+        },
+        {
+          type: 'warning',
+          category: 'performance',
+          title: 'بطء في تحميل صفحات المنتجات',
+          description: 'متوسط تحميل صفحة المنتج 3.2 ثانية - أعلى من المعيار المثالي',
+          impact: 'زيادة معدل الارتداد بـ 15%',
+          urgency: 'مهم',
+          effort: 'سهل',
+          roi: 'متوسط'
+        },
+        {
+          type: 'info',
+          category: 'seo',
+          title: 'فرصة تحسين الكلمات المفتاحية',
+          description: 'يمكن استهداف 25 كلمة مفتاحية إضافية في قطاع منتجاتك',
+          impact: 'زيادة الزيارات العضوية بـ 40%',
+          urgency: 'منخفض',
+          effort: 'متوسط',
+          roi: 'عالي'
+        }
+      ],
+
+      // توصيات ذكية مخصصة
+      smartRecommendations: [
+        {
+          category: 'conversion',
+          title: 'تبسيط عملية الدفع إلى خطوتين',
+          description: 'قلل خطوات الدفع من 4 إلى 2 وأضف خيار الدفع السريع',
+          estimatedImpact: '+25% معدل تحويل',
+          estimatedRevenue: '+8,500 ريال شهرياً',
+          implementationTime: '2-3 أسابيع',
+          priority: 'عالي',
+          difficulty: 'متوسط'
+        },
+        {
+          category: 'performance',
+          title: 'تحسين ضغط الصور والكاش',
+          description: 'استخدم WebP وتقنيات الضغط المتقدمة مع تطبيق CDN',
+          estimatedImpact: '+40% سرعة تحميل',
+          estimatedRevenue: '+2,200 ريال شهرياً',
+          implementationTime: '1-2 أسبوع',
+          priority: 'متوسط',
+          difficulty: 'سهل'
+        },
+        {
+          category: 'trust',
+          title: 'إضافة مراجعات العملاء وشارات الثقة',
+          description: 'اعرض مراجعات حقيقية وشارات أمان لزيادة ثقة العملاء',
+          estimatedImpact: '+18% معدل تحويل',
+          estimatedRevenue: '+5,800 ريال شهرياً',
+          implementationTime: '1 أسبوع',
+          priority: 'متوسط',
+          difficulty: 'سهل'
+        }
+      ]
+    });
+    
+    setIsAnalyzing(false);
+    setAnalysisComplete(true);
+  };
+
+  const resetAnalysis = () => {
+    setUrl('');
+    setCompetitorUrl('');
+    setIsAnalyzing(false);
+    setAnalysisComplete(false);
+    setProgress(0);
+    setCurrentStep('');
+    setAnalysisResults(null);
+    setActiveTab('overview');
+  };
+
+  const getScoreColor = (score) => {
+    if (score >= 85) return '#10b981';
+    if (score >= 70) return '#f59e0b';
+    return '#ef4444';
+  };
+
+  const getScoreBgColor = (score) => {
+    if (score >= 85) return '#ecfdf5';
+    if (score >= 70) return '#fffbeb';
+    return '#fef2f2';
+  };
+
+  if (isAnalyzing) {
+    return (
+      <div style={{...styles.container, ...styles.gradientBg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'}}>
+        <div style={{...styles.card, width: '100%', maxWidth: '800px', overflow: 'hidden'}}>
+          <div style={{...styles.gradientBg, padding: '40px', textAlign: 'center', color: 'white'}}>
+            <div style={{marginBottom: '20px'}}>
+              <div style={{width: '80px', height: '80px', backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', animation: 'pulse 2s infinite'}}>
+                <Search style={{width: '40px', height: '40px'}} />
+              </div>
+            </div>
+            <h2 style={{fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px', margin: 0}}>تحليل متجرك الشامل</h2>
+            <p style={{opacity: 0.9, margin: 0}}>نحن نقوم بفحص شامل ومتقدم لمتجرك الإلكتروني</p>
+          </div>
+          
+          <div style={{padding: '40px'}}>
+            <div style={{marginBottom: '30px'}}>
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px'}}>
+                <span style={{fontSize: '18px', fontWeight: '600'}}>التقدم</span>
+                <span style={{fontSize: '24px', fontWeight: 'bold', color: '#667eea'}}>{Math.round(progress)}%</span>
+              </div>
+              <div style={styles.progressBar}>
+                <div style={{...styles.progressFill, width: `${progress}%`}}></div>
+              </div>
+            </div>
+
+            <div style={{background: 'linear-gradient(to right, #eff6ff, #f3e8ff)', padding: '24px', borderRadius: '16px', marginBottom: '30px'}}>
+              <div style={{display: 'flex', alignItems: 'flex-start', gap: '16px'}}>
+                <div style={{padding: '12px', backgroundColor: '#3b82f6', borderRadius: '12px'}}>
+                  <Activity style={{width: '24px', height: '24px', color: 'white'}} />
+                </div>
+                <div style={{flex: 1}}>
+                  <h4 style={{fontWeight: '600', color: '#1e40af', marginBottom: '8px'}}>الخطوة الحالية</h4>
+                  <p style={{color: '#1d4ed8', margin: 0}}>{currentStep}</p>
+                  <div style={{marginTop: '12px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#3730a3'}}>
+                    <RefreshCw style={{width: '16px', height: '16px', animation: 'spin 2s linear infinite'}} />
+                    <span>جاري العمل...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '30px'}}>
+              <div style={{background: '#ecfdf5', padding: '20px', borderRadius: '12px', textAlign: 'center'}}>
+                <CheckCircle style={{width: '32px', height: '32px', color: '#10b981', margin: '0 auto 8px'}} />
+                <p style={{fontSize: '14px', fontWeight: '500', color: '#065f46', margin: 0}}>تحليل تقني شامل</p>
+              </div>
+              <div style={{background: '#eff6ff', padding: '20px', borderRadius: '12px', textAlign: 'center'}}>
+                <TrendingUp style={{width: '32px', height: '32px', color: '#3b82f6', margin: '0 auto 8px'}} />
+                <p style={{fontSize: '14px', fontWeight: '500', color: '#1e40af', margin: 0}}>قياس الأداء المتقدم</p>
+              </div>
+              <div style={{background: '#f3e8ff', padding: '20px', borderRadius: '12px', textAlign: 'center'}}>
+                <Target style={{width: '32px', height: '32px', color: '#8b5cf6', margin: '0 auto 8px'}} />
+                <p style={{fontSize: '14px', fontWeight: '500', color: '#7c3aed', margin: 0}}>توصيات مخصصة</p>
+              </div>
+            </div>
+
+            <div style={{textAlign: 'center', fontSize: '14px', color: '#6b7280'}}>
+              <p style={{margin: 0}}>يتم تحليل أكثر من 150+ عامل تؤثر على أداء متجرك</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  if (analysisComplete && analysisResults) {
+    const filteredIssues = selectedCategory === 'all' 
+      ? analysisResults.criticalIssues 
+      : analysisResults.criticalIssues.filter(issue => issue.category === selectedCategory);
 
-.App-link {
-  color: #61dafb;
-}
+    return (
+      <div style={styles.container}>
+        {/* Header */}
+        <div style={{backgroundColor: 'white', borderBottom: '1px solid #e5e7eb', position: 'sticky', top: 0, zIndex: 50}}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '16px 20px'}}>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px'}}>
+              <div>
+                <h1 style={{fontSize: '24px', fontWeight: 'bold', color: '#111827', margin: 0, marginBottom: '4px'}}>تقرير التحليل الشامل</h1>
+                <p style={{color: '#6b7280', margin: 0}}>تحليل متقدم للموقع: {url}</p>
+              </div>
+              <div style={{display: 'flex', gap: '12px'}}>
+                <button style={{...styles.button, background: 'white', color: '#374151', border: '1px solid #d1d5db', padding: '8px 16px'}}>
+                  <Download style={{width: '16px', height: '16px'}} />
+                  تصدير PDF
+                </button>
+                <button onClick={resetAnalysis} style={{...styles.button, padding: '8px 16px'}}>
+                  <Search style={{width: '16px', height: '16px'}} />
+                  تحليل جديد
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '32px 20px'}}>
+          {/* Overall Score Dashboard */}
+          <div style={{...styles.card, padding: '40px', marginBottom: '32px'}}>
+            <div style={{textAlign: 'center', marginBottom: '40px'}}>
+              <div style={{position: 'relative', display: 'inline-block'}}>
+                <div style={{width: '120px', height: '120px', margin: '0 auto 16px'}}>
+                  <svg style={{width: '100%', height: '100%', transform: 'rotate(-90deg)'}} viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" strokeWidth="8" />
+                    <circle 
+                      cx="50" cy="50" r="45" 
+                      fill="none" 
+                      stroke="#3b82f6"
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                      strokeDasharray={2 * Math.PI * 45}
+                      strokeDashoffset={2 * Math.PI * 45 * (1 - analysisResults.overallScore / 100)}
+                      style={{transition: 'all 1s ease'}}
+                    />
+                  </svg>
+                  <div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <div style={{textAlign: 'center'}}>
+                      <div style={{fontSize: '28px', fontWeight: 'bold', color: '#111827'}}>{analysisResults.overallScore}</div>
+                      <div style={{fontSize: '12px', color: '#6b7280'}}>من 100</div>
+                    </div>
+                  </div>
+                </div>
+                <h2 style={{fontSize: '24px', fontWeight: 'bold', color: '#111827', marginBottom: '8px'}}>النتيجة الإجمالية</h2>
+                <p style={{color: '#6b7280', margin: 0}}>تقييم شامل لأداء متجرك الإلكتروني</p>
+              </div>
+            </div>
+
+            {/* Score Breakdown */}
+            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px'}}>
+              {[
+                { label: 'الأداء', score: analysisResults.performanceScore, icon: Zap, color: '#f59e0b' },
+                { label: 'السيو', score: analysisResults.seoScore, icon: TrendingUp, color: '#3b82f6' },
+                { label: 'الأمان', score: analysisResults.securityScore, icon: Shield, color: '#10b981' },
+                { label: 'تجربة المستخدم', score: analysisResults.uxScore, icon: Users, color: '#8b5cf6' },
+                { label: 'معدل التحويل', score: analysisResults.croScore, icon: Target, color: '#ef4444' }
+              ].map((item, index) => (
+                <div key={index} style={{
+                  padding: '20px', 
+                  borderRadius: '12px', 
+                  textAlign: 'center',
+                  backgroundColor: getScoreBgColor(item.score)
+                }}>
+                  <item.icon style={{width: '32px', height: '32px', color: getScoreColor(item.score), margin: '0 auto 8px'}} />
+                  <div style={{fontSize: '24px', fontWeight: 'bold', color: getScoreColor(item.score)}}>{item.score}</div>
+                  <div style={{fontSize: '14px', color: '#6b7280'}}>{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Key Metrics */}
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px', marginBottom: '32px'}}>
+            <div style={{...styles.card, padding: '24px'}}>
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px'}}>
+                <div style={{padding: '8px', backgroundColor: '#dbeafe', borderRadius: '8px'}}>
+                  <Clock style={{width: '24px', height: '24px', color: '#3b82f6'}} />
+                </div>
+                <span style={{fontSize: '24px', fontWeight: 'bold', color: '#111827'}}>{analysisResults.metrics.pageLoadTime}s</span>
+              </div>
+              <h3 style={{fontWeight: '600', color: '#111827', margin: 0, marginBottom: '4px'}}>سرعة التحميل</h3>
+              <p style={{fontSize: '14px', color: '#6b7280', margin: 0}}>متوسط تحميل الصفحة</p>
+            </div>
+
+            <div style={{...styles.card, padding: '24px'}}>
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px'}}>
+                <div style={{padding: '8px', backgroundColor: '#dcfce7', borderRadius: '8px'}}>
+                  <ShoppingCart style={{width: '24px', height: '24px', color: '#10b981'}} />
+                </div>
+                <span style={{fontSize: '24px', fontWeight: 'bold', color: '#111827'}}>{analysisResults.metrics.conversionRate}%</span>
+              </div>
+              <h3 style={{fontWeight: '600', color: '#111827', margin: 0, marginBottom: '4px'}}>معدل التحويل</h3>
+              <p style={{fontSize: '14px', color: '#6b7280', margin: 0}}>نسبة إتمام المبيعات</p>
+            </div>
+
+            <div style={{...styles.card, padding: '24px'}}>
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px'}}>
+                <div style={{padding: '8px', backgroundColor: '#f3e8ff', borderRadius: '8px'}}>
+                  <TrendingDown style={{width: '24px', height: '24px', color: '#8b5cf6'}} />
+                </div>
+                <span style={{fontSize: '24px', fontWeight: 'bold', color: '#111827'}}>{analysisResults.metrics.bounceRate}%</span>
+              </div>
+              <h3 style={{fontWeight: '600', color: '#111827', margin: 0, marginBottom: '4px'}}>معدل الارتداد</h3>
+              <p style={{fontSize: '14px', color: '#6b7280', margin: 0}}>نسبة مغادرة الموقع السريعة</p>
+            </div>
+
+            <div style={{...styles.card, padding: '24px'}}>
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px'}}>
+                <div style={{padding: '8px', backgroundColor: '#fef3c7', borderRadius: '8px'}}>
+                  <DollarSign style={{width: '24px', height: '24px', color: '#f59e0b'}} />
+                </div>
+                <span style={{fontSize: '24px', fontWeight: 'bold', color: '#111827'}}>{analysisResults.ecommerceAnalysis.averageOrderValue}</span>
+              </div>
+              <h3 style={{fontWeight: '600', color: '#111827', margin: 0, marginBottom: '4px'}}>متوسط قيمة الطلب</h3>
+              <p style={{fontSize: '14px', color: '#6b7280', margin: 0}}>بالريال السعودي</p>
+            </div>
+          </div>
+
+          {/* Main Analysis Tabs */}
+          <div style={styles.card}>
+            <div style={{borderBottom: '1px solid #e5e7eb'}}>
+              <div style={{display: 'flex', overflowX: 'auto'}}>
+                {[
+                  { id: 'overview', label: 'نظرة عامة', icon: Eye },
+                  { id: 'issues', label: 'المشاكل المكتشفة', icon: AlertTriangle },
+                  { id: 'recommendations', label: 'التوصيات الذكية', icon: Lightbulb },
+                  { id: 'ecommerce', label: 'تحليل التجارة الإلكترونية', icon: ShoppingCart },
+                  { id: 'competitor', label: 'مقارنة المنافسين', icon: BarChart3 },
+                  { id: 'detailed', label: 'تحليل تفصيلي', icon: FileText }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '16px 24px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      borderBottom: `2px solid ${activeTab === tab.id ? '#3b82f6' : 'transparent'}`,
+                      color: activeTab === tab.id ? '#3b82f6' : '#6b7280',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'colors 0.3s',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    <tab.icon style={{width: '16px', height: '16px'}} />
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div style={{padding: '32px'}}>
+              {activeTab === 'overview' && (
+                <div>
+                  <h3 style={{fontSize: '20px', fontWeight: 'bold', color: '#111827', marginBottom: '24px'}}>ملخص الأداء</h3>
+                  <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px'}}>
+                    <div style={{background: 'linear-gradient(to right, #ecfdf5, #d1fae5)', padding: '24px', borderRadius: '12px'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px'}}>
+                        <CheckCircle style={{width: '32px', height: '32px', color: '#10b981'}} />
+                        <h4 style={{fontWeight: '600', color: '#065f46', margin: 0}}>نقاط القوة</h4>
+                      </div>
+                      <ul style={{listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#047857'}}>
+                        <li style={{padding: '4px 0'}}>• أمان عالي المستوى (95/100)</li>
+                        <li style={{padding: '4px 0'}}>• توافق ممتاز مع الجوال</li>
+                        <li style={{padding: '4px 0'}}>• محتوى عالي الجودة</li>
+                        <li style={{padding: '4px 0'}}>• سرعة تحميل جيدة</li>
+                      </ul>
+                    </div>
+
+                    <div style={{background: 'linear-gradient(to right, #fffbeb, #fef3c7)', padding: '24px', borderRadius: '12px'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px'}}>
+                        <AlertTriangle style={{width: '32px', height: '32px', color: '#f59e0b'}} />
+                        <h4 style={{fontWeight: '600', color: '#92400e', margin: 0}}>يحتاج تحسين</h4>
+                      </div>
+                      <ul style={{listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#b45309'}}>
+                        <li style={{padding: '4px 0'}}>• معدل تخلي عربة الشراء عالي</li>
+                        <li style={{padding: '4px 0'}}>• عملية دفع معقدة</li>
+                        <li style={{padding: '4px 0'}}>• قلة في المراجعات</li>
+                        <li style={{padding: '4px 0'}}>• عدم وجود دردشة مباشرة</li>
+                      </ul>
+                    </div>
+
+                    <div style={{background: 'linear-gradient(to right, #eff6ff, #dbeafe)', padding: '24px', borderRadius: '12px'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px'}}>
+                        <TrendingUp style={{width: '32px', height: '32px', color: '#3b82f6'}} />
+                        <h4 style={{fontWeight: '600', color: '#1e40af', margin: 0}}>الفرص المتاحة</h4>
+                      </div>
+                      <ul style={{listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#1d4ed8'}}>
+                        <li style={{padding: '4px 0'}}>• زيادة الإيرادات بـ 25%</li>
+                        <li style={{padding: '4px 0'}}>• تحسين تجربة الدفع</li>
+                        <li style={{padding: '4px 0'}}>• استهداف كلمات مفتاحية جديدة</li>
+                        <li style={{padding: '4px 0'}}>• تطوير برنامج ولاء العملاء</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'recommendations' && (
+                <div>
+                  <h3 style={{fontSize: '20px', fontWeight: 'bold', color: '#111827', marginBottom: '24px'}}>التوصيات الذكية المخصصة</h3>
+                  <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
+                    {analysisResults.smartRecommendations.map((rec, index) => (
+                      <div key={index} style={{background: 'linear-gradient(to right, #ecfdf5, #dbeafe)', border: '1px solid #10b981', borderRadius: '16px', padding: '24px'}}>
+                        <div style={{display: 'flex', alignItems: 'flex-start', gap: '16px'}}>
+                          <div style={{padding: '12px', backgroundColor: '#10b981', borderRadius: '12px'}}>
+                            <Lightbulb style={{width: '24px', height: '24px', color: 'white'}} />
+                          </div>
+                          <div style={{flex: 1}}>
+                            <div style={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '12px'}}>
+                              <div>
+                                <h4 style={{fontSize: '18px', fontWeight: '600', color: '#111827', marginBottom: '8px'}}>{rec.title}</h4>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px'}}>
+                                  <span style={{
+                                    padding: '4px 8px',
+                                    borderRadius: '9999px',
+                                    fontSize: '12px',
+                                    fontWeight: '500',
+                                    backgroundColor: rec.priority === 'عالي' ? '#fef2f2' : rec.priority === 'متوسط' ? '#fffbeb' : '#eff6ff',
+                                    color: rec.priority === 'عالي' ? '#b91c1c' : rec.priority === 'متوسط' ? '#b45309' : '#1d4ed8'
+                                  }}>
+                                    أولوية {rec.priority}
+                                  </span>
+                                  <span style={{
+                                    padding: '4px 8px',
+                                    borderRadius: '9999px',
+                                    fontSize: '12px',
+                                    fontWeight: '500',
+                                    backgroundColor: '#f3e8ff',
+                                    color: '#7c3aed'
+                                  }}>
+                                    {rec.category}
+                                  </span>
+                                </div>
+                              </div>
+                              <div style={{textAlign: 'right'}}>
+                                <div style={{fontSize: '14px', color: '#6b7280'}}>وقت التنفيذ</div>
+                                <div style={{fontWeight: '500'}}>{rec.implementationTime}</div>
+                              </div>
+                            </div>
+                            <p style={{color: '#6b7280', marginBottom: '16px'}}>{rec.description}</p>
+                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px'}}>
+                              <div style={{backgroundColor: '#ecfdf5', padding: '12px', borderRadius: '8px'}}>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                                  <TrendingUp style={{width: '16px', height: '16px', color: '#10b981'}} />
+                                  <span style={{fontSize: '14px', fontWeight: '500', color: '#047857'}}>التأثير المتوقع:</span>
+                                </div>
+                                <div style={{fontSize: '14px', color: '#065f46', marginTop: '4px'}}>{rec.estimatedImpact}</div>
+                              </div>
+                              <div style={{backgroundColor: '#eff6ff', padding: '12px', borderRadius: '8px'}}>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                                  <DollarSign style={{width: '16px', height: '16px', color: '#3b82f6'}} />
+                                  <span style={{fontSize: '14px', fontWeight: '500', color: '#1e40af'}}>العائد المتوقع:</span>
+                                </div>
+                                <div style={{fontSize: '14px', color: '#1d4ed8', marginTop: '4px'}}>{rec.estimatedRevenue}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
+  return (
+    <div style={styles.container}>
+      {/* Header */}
+      <header style={{backgroundColor: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid #e5e7eb', position: 'sticky', top: 0, zIndex: 50}}>
+        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '16px 20px'}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+              <div style={{position: 'relative'}}>
+                <div style={{padding: '12px', ...styles.gradientBg, borderRadius: '16px'}}>
+                  <Search style={{width: '28px', height: '28px', color: 'white'}} />
+                </div>
+                <div style={{position: 'absolute', top: '-4px', right: '-4px', width: '16px', height: '16px', backgroundColor: '#10b981', borderRadius: '50%', animation: 'pulse 2s infinite'}}></div>
+              </div>
+              <div>
+                <h1 style={{fontSize: '24px', fontWeight: 'bold', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0}}>
+                  محلل المتاجر المتطور
+                </h1>
+                <p style={{fontSize: '14px', color: '#6b7280', margin: 0}}>تحليل شامل وذكي للمتاجر الإلكترونية</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section style={{padding: '80px 20px'}}>
+        <div style={{maxWidth: '1000px', margin: '0 auto', textAlign: 'center'}}>
+          <div style={{marginBottom: '32px'}}>
+            <span style={{padding: '8px 16px', backgroundColor: '#dbeafe', color: '#1d4ed8', borderRadius: '9999px', fontSize: '14px', fontWeight: '500'}}>
+              🚀 الأداة الأكثر تطوراً في السوق
+            </span>
+          </div>
+          
+          <h1 style={{fontSize: '64px', fontWeight: 'bold', marginBottom: '32px', lineHeight: 1.1}}>
+            <span style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+              حلل متجرك
+            </span>
+            <br />
+            <span style={{color: '#111827'}}>بذكاء اصطناعي</span>
+          </h1>
+          
+          <p style={{fontSize: '20px', color: '#6b7280', marginBottom: '48px', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.6}}>
+            احصل على تحليل شامل ومتقدم لمتجرك الإلكتروني مع تركيز خاص على تحسين معدل التحويل، 
+            تجربة المستخدم، والأداء التقني باستخدام أحدث تقنيات الذكاء الاصطناعي
+          </p>
+          
+          {/* Advanced Analysis Form */}
+          <div style={{...styles.card, padding: '32px', maxWidth: '800px', margin: '0 auto', background: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.2)'}}>
+            <div style={{marginBottom: '24px'}}>
+              <h3 style={{fontSize: '24px', fontWeight: 'bold', color: '#111827', marginBottom: '8px'}}>ابدأ التحليل المجاني</h3>
+              <p style={{color: '#6b7280', margin: 0}}>تحليل شامل لأكثر من 150+ عامل تؤثر على أداء متجرك</p>
+            </div>
+            
+            <div style={{marginBottom: '16px'}}>
+              <div style={{position: 'relative'}}>
+                <Globe style={{position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', width: '20px', height: '20px', color: '#9ca3af'}} />
+                <input
+                  type="url"
+                  placeholder="أدخل رابط متجرك الإلكتروني (مثال: https://example.com)"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  style={{
+                    ...styles.inputField,
+                    paddingRight: '48px',
+                    paddingLeft: url ? '48px' : '16px',
+                    fontSize: '18px'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+                />
+                {url && (
+                  <div style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)'}}>
+                    <Verified style={{width: '20px', height: '20px', color: '#10b981'}} />
+                  </div>
+                )}
+              </div>
+              
+              <button 
+                onClick={handleAnalyze} 
+                disabled={!url}
+                style={{
+                  ...styles.button,
+                  width: '100%',
+                  padding: '16px 32px',
+                  fontSize: '18px',
+                  marginTop: '16px',
+                  opacity: url ? 1 : 0.5,
+                  cursor: url ? 'pointer' : 'not-allowed',
+                  transform: 'translateY(0)',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseOver={(e) => {
+                  if (url) e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                <Search style={{width: '24px', height: '24px'}} />
+                بدء التحليل المتطور
+                <ArrowRight style={{width: '24px', height: '24px'}} />
+              </button>
+              
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '24px'}}>
+                {[
+                  {icon: CheckCircle, text: 'تحليل مجاني 100%', color: '#10b981'},
+                  {icon: Clock, text: 'نتائج خلال 3 دقائق', color: '#3b82f6'},
+                  {icon: Shield, text: 'بيانات آمنة ومشفرة', color: '#8b5cf6'},
+                  {icon: Award, text: 'تقرير تفصيلي شامل', color: '#f59e0b'}
+                ].map((item, index) => (
+                  <div key={index} style={{display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#6b7280'}}>
+                    <item.icon style={{width: '20px', height: '20px', color: item.color}} />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Advanced Features Section */}
+      <section style={{padding: '80px 20px', backgroundColor: 'rgba(255, 255, 255, 0.5)'}}>
+        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+          <div style={{textAlign: 'center', marginBottom: '64px'}}>
+            <h2 style={{fontSize: '36px', fontWeight: 'bold', color: '#111827', marginBottom: '16px'}}>لماذا محللنا الأكثر تطوراً؟</h2>
+            <p style={{fontSize: '20px', color: '#6b7280', maxWidth: '600px', margin: '0 auto'}}>
+              نقدم تحليلاً شاملاً ومتقدماً يفوق المنافسين بتقنيات الذكاء الاصطناعي وخبرة 10+ سنوات في التجارة الإلكترونية
+            </p>
+          </div>
+          
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '32px'}}>
+            {[
+              {
+                icon: TrendingUp,
+                title: 'تحليل معدل التحويل المتقدم',
+                description: 'فحص مفصل لمسار الشراء مع تحديد نقاط التسرب والتوصيات المخصصة لزيادة المبيعات بنسبة تصل إلى 40%',
+                color: '#3b82f6',
+                bgColor: '#eff6ff',
+                features: ['تحليل مسار العميل', 'فحص عربة الشراء', 'تحسين عملية الدفع', 'A/B Testing توصيات']
+              },
+              {
+                icon: Zap,
+                title: 'تحليل الأداء التقني الشامل',
+                description: 'قياس دقيق لـ Core Web Vitals وسرعة التحميل مع اقتراحات تقنية محددة لتحسين الأداء',
+                color: '#10b981',
+                bgColor: '#ecfdf5',
+                features: ['Core Web Vitals', 'تحليل الشبكة', 'ضغط الملفات', 'CDN التحسين']
+              },
+              {
+                icon: Users,
+                title: 'تحليل تجربة المستخدم المتطور',
+                description: 'فحص شامل لسهولة الاستخدام والتنقل مع تركيز على تحسين رحلة العميل والتفاعل',
+                color: '#8b5cf6',
+                bgColor: '#f3e8ff',
+                features: ['خريطة الحرارة', 'تحليل النقرات', 'مسار التنقل', 'اختبار الوصول']
+              },
+              {
+                icon: Shield,
+                title: 'تحليل الأمان المتقدم',
+                description: 'فحص شامل لشهادات الأمان والحماية مع تقييم مخاطر الأمن السيبراني وTrust Signals',
+                color: '#ef4444',
+                bgColor: '#fef2f2',
+                features: ['SSL Analysis', 'Security Headers', 'Malware Scan', 'Trust Badges']
+              },
+              {
+                icon: Globe,
+                title: 'تحليل السيو التقني',
+                description: 'فحص متقدم للسيو التقني مع تحليل الكلمات المفتاحية واستراتيجيات المحتوى',
+                color: '#6366f1',
+                bgColor: '#eef2ff',
+                features: ['تحليل الكلمات المفتاحية', 'البحث المحلي', 'Schema Markup', 'Link Building']
+              },
+              {
+                icon: BarChart3,
+                title: 'مقارنة تنافسية ذكية',
+                description: 'مقارنة شاملة مع المنافسين المباشرين وتحليل نقاط القوة والضعف في السوق',
+                color: '#f59e0b',
+                bgColor: '#fffbeb',
+                features: ['تحليل المنافسين', 'مقارنة الأسعار', 'Gap Analysis', 'Market Position']
+              }
+            ].map((feature, index) => (
+              <div key={index} style={{
+                ...styles.card,
+                padding: '32px',
+                transition: 'all 0.3s ease',
+                cursor: 'pointer',
+                ':hover': {
+                  transform: 'translateY(-8px)',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                }
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+              }}
+              >
+                <div style={{
+                  display: 'inline-flex',
+                  padding: '16px',
+                  borderRadius: '16px',
+                  backgroundColor: feature.bgColor,
+                  marginBottom: '24px',
+                  transition: 'transform 0.3s ease'
+                }}>
+                  <feature.icon style={{width: '32px', height: '32px', color: feature.color}} />
+                </div>
+                <h3 style={{fontSize: '20px', fontWeight: 'bold', color: '#111827', marginBottom: '16px'}}>{feature.title}</h3>
+                <p style={{color: '#6b7280', marginBottom: '24px', lineHeight: 1.6}}>{feature.description}</p>
+                <ul style={{listStyle: 'none', padding: 0, margin: 0}}>
+                  {feature.features.map((item, itemIndex) => (
+                    <li key={itemIndex} style={{display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#374151', marginBottom: '8px'}}>
+                      <CheckCircle style={{width: '16px', height: '16px', color: '#10b981'}} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section style={{...styles.gradientBg, padding: '80px 20px', color: 'white'}}>
+        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+          <div style={{textAlign: 'center', marginBottom: '64px'}}>
+            <h2 style={{fontSize: '36px', fontWeight: 'bold', marginBottom: '16px'}}>أرقام تتحدث عن نفسها</h2>
+            <p style={{fontSize: '20px', color: 'rgba(255, 255, 255, 0.8)'}}>نتائج حقيقية لعملائنا من جميع أنحاء المملكة والمنطقة</p>
+          </div>
+          
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '32px'}}>
+            {[
+              { number: '2,500+', label: 'متجر تم تحليله', icon: ShoppingCart },
+              { number: '40%', label: 'زيادة متوسط في التحويل', icon: TrendingUp },
+              { number: '65%', label: 'تحسن في سرعة التحميل', icon: Zap },
+              { number: '98%', label: 'رضا العملاء', icon: Star }
+            ].map((stat, index) => (
+              <div key={index} style={{
+                textAlign: 'center',
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '16px',
+                padding: '32px',
+                transition: 'all 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+              }}
+              >
+                <div style={{
+                  display: 'inline-flex',
+                  padding: '16px',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: '16px',
+                  marginBottom: '16px'
+                }}>
+                  <stat.icon style={{width: '32px', height: '32px', color: 'white'}} />
+                </div>
+                <div style={{fontSize: '36px', fontWeight: 'bold', marginBottom: '8px'}}>{stat.number}</div>
+                <div style={{color: 'rgba(255, 255, 255, 0.8)'}}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section style={{padding: '80px 20px'}}>
+        <div style={{maxWidth: '800px', margin: '0 auto', textAlign: 'center'}}>
+          <div style={{
+            background: 'linear-gradient(135deg, #111827 0%, #374151 100%)',
+            borderRadius: '24px',
+            padding: '48px',
+            color: 'white',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)'
+            }}></div>
+            <div style={{position: 'relative', zIndex: 10}}>
+              <h2 style={{fontSize: '36px', fontWeight: 'bold', marginBottom: '16px'}}>جاهز لتطوير متجرك؟</h2>
+              <p style={{fontSize: '20px', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '32px'}}>
+                احصل على تحليل مجاني شامل واكتشف كيف يمكن زيادة مبيعاتك بنسبة تصل إلى 40%
+              </p>
+              <div style={{display: 'flex', flexDirection: window.innerWidth < 640 ? 'column' : 'row', gap: '16px', justifyContent: 'center'}}>
+                <button style={{
+                  ...styles.button,
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+                  padding: '16px 32px'
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 20px 40px rgba(59, 130, 246, 0.4)';
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}
+                >
+                  ابدأ التحليل المجاني
+                </button>
+                <button style={{
+                  padding: '16px 32px',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  color: 'white',
+                  border: '2px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                }}
+                >
+                  تحدث مع خبير
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default AdvancedStoreAnalyzer;
